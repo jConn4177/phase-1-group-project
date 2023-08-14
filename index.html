@@ -6,6 +6,7 @@
     <title>Phase-1-Project</title>
     <script defer type="text/javascript" src="./src/fetch_helpers.js"></script>
     <script defer type="text/javascript" src="./src/index.js"></script>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <header>
@@ -13,13 +14,26 @@
     </header>
     <main>
       <div>
-        <form action="" id="new-plant">
+        <form id="new-plant">
+          <h3>Add Plant</h3>
           <label for="new-name">Name: </label>
+          <br />
           <input type="text" name="name" id="new-name" />
-          <label for="new-image">Image: </label>
+          <br />
+          <label for="new-image">Image URL: </label>
+          <br />
           <input type="text" name="image" id="new-image" />
+          <br />
           <label for="new-description">Description: </label>
-          <input type="text" name="description" id="new-description" />
+          <br />
+          <textarea rows="4" cols="50" name="description" id="new-description"></textarea>
+          <br />
+          <br />
+          <input type="checkbox" name="favorite" id="new-favorite" /> 
+          <label for="favorite">Favorite</label>
+          <br />
+          <br />
+          <input type="submit" name="submit" />
         </form>
       </div>
     </main>
