@@ -15,7 +15,7 @@ function createPlantList(plants) {
       console.log("mouseover");
     });
     plantListName.addEventListener("click", event => {
-      addPlantCard();
+      displayPlantCard();
     });
     plantListDiv.append(plantListName);
   });
@@ -26,4 +26,4 @@ function createPlantList(plants) {
 //Card has a form submission that edits information about the card
 //Card has an Add to Favorites button
 //Card has a Delete button
-function addPlantCard() {}
+function displayPlantCard() {}
