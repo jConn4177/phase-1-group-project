@@ -1,0 +1,46 @@
+{
+  "plants": [
+    {
+      "id": 1,
+      "name": "Christmas Cactus",
+      "image": "",
+      "description": "",
+      "favorite": "false"
+    },
+    {
+      "id": 2,
+      "name": "Monstera",
+      "image": "",
+      "description": "",
+      "favorite": "false"
+    },
+    {
+      "id": 3,
+      "name": "Peace Lily",
+      "image": "",
+      "description": "",
+      "favorite": "false"
+    },
+    {
+      "id": 4,
+      "name": "Pothos",
+      "image": "",
+      "description": "",
+      "favorite": "false"
+    },
+    {
+      "id": 5,
+      "name": "Snake Plant",
+      "image": "",
+      "description": "",
+      "favorite": "false"
+    },
+    {
+      "id": 6,
+      "name": "Spider Plant",
+      "image": "",
+      "description": "",
+      "favorite": "false"
+    }
+  ]
+}
