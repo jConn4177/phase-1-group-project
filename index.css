@@ -31,6 +31,24 @@ textarea {
   color: #250902;
 }
 
+#favorite-container {
+  display: flex;
+  overflow-x: auto;
+  text-align: center;
+  margin: 10px;
+  width: auto;
+  justify-content:center;
+  background-color: rgb(71, 85, 85);
+  border-radius: 8px 8px;
+}
+
+#favorite-container img {
+  display: flex;
+  height: 200px;
+  padding: 20px;
+  text-align: center;
+}
+=======
 /* Plant list style - VJ */
 #plant-list-header {
   font-family: Courier New;
