@@ -52,6 +52,10 @@ const displayPlantCard = (plant) => {
   deleteButton.addEventListener("click", () => {
     deletePlant(plant);
   });
+  //*Note/comment
+  // const plantNote = document.querySelector("#plant-note");
+  // const addNote = document.querySelector("#note");
+  // addNote.addEventListener("click", () => {});
 };
 
 //* Add plant form with event listener
