@@ -4,9 +4,10 @@ let currentPlant; //* necessary for patch
 
 //*Initial GET request from db.json file
 fetch(url)
+
   .then(response => response.json())
-  .then(plants => {
-    isFavoriteTrue = Boolean(plants[0].favorite); //* Sets favorite button default
+  .then((plants) => {
+    isFavoriteTrue = plants[0].favorite; //* Sets favorite button default
     updateButtonDisplay(isFavoriteTrue); //*Sets favorite button
     displayPlantCard(plants[0]); //*Sets first plant as default card
     createPlantList(plants);
@@ -30,8 +31,8 @@ function createPlantList(plants) {
     plantListName.addEventListener("mouseleave", event => {
       plantListName.classList.remove("list-style-hover");
     });
-    plantListName.addEventListener("click", event => {
-      isFavoriteTrue = Boolean(plant.favorite); //* sets favorite button textContent
+    plantListName.addEventListener("click", (event) => {
+      isFavoriteTrue = plant.favorite; //* sets favorite button textContent
       currentPlant = plant;
       displayPlantCard(plant);
     });
@@ -48,7 +49,7 @@ const displayPlantCard = plant => {
   const plantDescription = document.querySelector("#plant-description");
   plantDescription.textContent = plant.description;
   const favoriteButton = document.querySelector("#favorite-btn");
-  isFavoriteTrue = Boolean(plant.favorite);
+  isFavoriteTrue = plant.favorite;
   updateButtonDisplay(isFavoriteTrue);
   favoriteButton.removeEventListener("click", favoriteButtonClickHandler); //*Remove existing event listener before adding a new one
   favoriteButton.addEventListener("click", favoriteButtonClickHandler); //*Add event listener with a named function
