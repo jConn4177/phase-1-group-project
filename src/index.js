@@ -139,3 +139,48 @@ const favoriteButtonClickHandler = () => {
   updateButtonDisplay(isFavoriteTrue);
   updateFavorite(currentPlant);
 };
+
+// KL UPDATES
+//Favorites GET request from db.json file
+fetch("http://localhost:3000/plants")
+  .then(response => response.json())
+  .then(plants => {
+    favoritePlant(plants)
+
+  })
+
+const faveArr = []
+
+function favoritePlant(plants) {
+  for (let i = 0; i < plants.length; i++) {
+    if (plants[i].favorite === true) {
+      faveArr.push(plants[i])
+    }
+  }
+    renderFaves(faveArr)
+
+  }
+
+let selectedFave; // Global variable
+
+//Add favorite plants to top bar
+function renderFaves(faveArr) {
+  const favoritesContainer = document.getElementById("favorite-container");
+  console.log('hi')
+  faveArr.forEach(plant => {
+  const div = document.createElement('div')
+  const img = document.createElement('img')
+  img.src = plant.image
+
+  div.append(img)
+  favoritesContainer.append(div)
+  
+  //Set for when favorite is clicked to do an action
+  img.addEventListener('click', (e) => {
+    selectedFave = plant
+    console.log(selectedFave)
+
+  })
+})
+}
+
