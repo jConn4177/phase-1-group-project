@@ -2,7 +2,7 @@
 fetch("http://localhost:3000/plants")
   .then(response => response.json())
   .then(plants => createPlantList(plants))
-  .catch(error => alert("You forgot to set up your server!"));
+  .catch(error => alert("You likely forgot to set up your server!"));
 
 const plantListDiv = document.getElementById("plant-list");
 
