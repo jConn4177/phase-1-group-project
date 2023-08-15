@@ -1,11 +1,18 @@
+const url = "http://localhost:3000/plants"; //*Sets url
+let isFavoriteTrue; //* necessary for favorite button function
+let currentPlant; //* necessary for patch
+
 //Initial GET request from db.json file
-fetch("http://localhost:3000/plants")
+fetch(url)
   .then((response) => response.json())
   .then((plants) => {
-    displayPlantCard(plants[0]);
+    isFavoriteTrue = Boolean(plants[0].favorite); //* Sets favorite button default
+    updateButtonDisplay(isFavoriteTrue); //*Sets favorite button
+    displayPlantCard(plants[0]); //*Sets first plant as default card
     createPlantList(plants);
+    currentPlant = plants[0];
   })
-  .catch((error) => alert("You forgot to set up your server!")); //! ErrorAlert occurs while server is running.  Might be local user error -jason
+  .catch((error) => alert("You forgot to set up your server!"));
 
 const plantListDiv = document.getElementById("plant-list");
 
@@ -20,6 +27,8 @@ function createPlantList(plants) {
       console.log("mouseover");
     });
     plantListName.addEventListener("click", (event) => {
+      isFavoriteTrue = Boolean(plant.favorite); //* sets favorite button textContent
+      currentPlant = plant;
       displayPlantCard();
     });
     plantListDiv.append(plantListName);
@@ -38,8 +47,15 @@ const displayPlantCard = (plant) => {
   plantImage.src = plant.image;
   const plantDescription = document.querySelector("#plant-description");
   plantDescription.textContent = plant.description;
-  const favoriteButton = document.querySelector("#add-favorite");
+  const favoriteButton = document.querySelector("#favorite-btn");
+  isFavoriteTrue = Boolean(plant.favorite);
+  updateButtonDisplay(isFavoriteTrue);
+  favoriteButton.removeEventListener("click", favoriteButtonClickHandler); //*Remove existing event listener before adding a new one
+  favoriteButton.addEventListener("click", favoriteButtonClickHandler); //*Add event listener with a named function
   const deleteButton = document.querySelector("#delete");
+  deleteButton.addEventListener("click", () => {
+    deletePlant(plant);
+  });
 };
 
 // Add plant form with event listener
@@ -61,18 +77,65 @@ function handleSubmit(e) {
   newForm.reset();
 }
 
-/*
 // Post new plant to server
-const postJSON = (data, url = 'http://localhost:3000/plants/') => {
-    return fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      if (!response.ok) {
-        throw response.statusText;
-      }
-      return response.json();
-    });
-  };
-  */
+// const postJSON = (data, url = 'http://localhost:3000/plants/') => {
+//     return fetch(url, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json", Accept: "application/json" },
+//       body: JSON.stringify(data),
+//     }).then((response) => {
+//       if (!response.ok) {
+//         throw response.statusText;
+//       }
+//       return response.json();
+//     });
+//   };
+
+//*function to change favorite button depending on favorite.ifTrue
+function updateButtonDisplay(isTrue) {
+  const button = document.getElementById("favorite-btn");
+  if (isTrue) {
+    button.textContent = "Remove from Favorites";
+  } else {
+    button.textContent = "Add to Favorites";
+  }
+}
+
+//* Updates the favorite
+const updateFavorite = (plantObj) => {
+  const updatedPlant = { ...plantObj };
+  updatedPlant.favorite = !updatedPlant.favorite;
+  patchJSON(url + `/${plantObj.id}`, { favorite: updatedPlant.favorite }).then(
+    () => {
+      currentPlant.favorite = updatedPlant.favorite;
+      updateButtonDisplay(updatedPlant.favorite);
+    }
+  );
+};
+
+//* Deletes a plant from db.json
+const deletePlant = (plantObj) => {
+  getJSON(url).then((plants) => {
+    deleteJSON(url + `/${plantObj.id}`);
+    const plantIndex = plants.findIndex((plant) => plant.id === plantObj.id);
+    if (plantIndex !== -1 && plantIndex < plants.length - 1) {
+      currentPlant = plants[plantIndex + 1];
+      displayPlantCard(plants[plantIndex + 1]);
+    } else {
+      // Display a default state if there is no next plant
+      displayPlantCard({
+        name: "",
+        image: "",
+        description: "",
+        favorite: false,
+      });
+    }
+  });
+};
+
+//* Named function for the "Add to Favorites" button click event
+const favoriteButtonClickHandler = () => {
+  isFavoriteTrue = !isFavoriteTrue;
+  updateButtonDisplay(isFavoriteTrue);
+  updateFavorite(currentPlant);
+};
