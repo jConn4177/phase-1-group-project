@@ -2,7 +2,7 @@ const url = "http://localhost:3000/plants"; //*Sets url
 let isFavoriteTrue; //* necessary for favorite button function
 let currentPlant; //* necessary for patch
 
-//Initial GET request from db.json file
+//*Initial GET request from db.json file
 fetch(url)
   .then((response) => response.json())
   .then((plants) => {
@@ -16,9 +16,9 @@ fetch(url)
 
 const plantListDiv = document.getElementById("plant-list");
 
-//createPlantList function creates a div for each plant
-//Adds mouseover event to each plantListName div
-//Adds click event to each plantListName div
+//*createPlantList function creates a div for each plant
+//*Adds mouseover event to each plantListName div
+//*Adds click event to each plantListName div
 function createPlantList(plants) {
   plants.forEach((plant) => {
     const plantListName = document.createElement("div");
@@ -35,11 +35,7 @@ function createPlantList(plants) {
   });
 }
 
-//addPlantCard function creates a card that is displayed when plant name is clicked
-//Card contains plant name, plant imaage, and plant description
-//Card has a form submission that edits information about the card
-//Card has an Add to Favorites button
-//Card has a Delete button
+//*Renders Plant Card Display
 const displayPlantCard = (plant) => {
   const plantName = document.querySelector("#plant-name");
   plantName.textContent = plant.name;
@@ -58,11 +54,11 @@ const displayPlantCard = (plant) => {
   });
 };
 
-// Add plant form with event listener
+//* Add plant form with event listener
 const newForm = document.querySelector("#new-plant");
 newForm.addEventListener("submit", handleSubmit);
 
-// Create object for new plants
+//* Create object for new plants
 function handleSubmit(e) {
   e.preventDefault();
   const newPlant = {
@@ -122,7 +118,7 @@ const deletePlant = (plantObj) => {
       currentPlant = plants[plantIndex + 1];
       displayPlantCard(plants[plantIndex + 1]);
     } else {
-      // Display a default state if there is no next plant
+      //* Display a default state if there is no next plant
       displayPlantCard({
         name: "",
         image: "",
