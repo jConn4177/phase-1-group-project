@@ -64,11 +64,11 @@ const displayPlantCard = plant => {
   // addNote.addEventListener("click", () => {});
 };
 
-//* Add plant form with event listener
+// Add plant form with event listener - KL
 const newForm = document.querySelector("#new-plant");
 newForm.addEventListener("submit", handleSubmit);
 
-//* Create object for new plants
+// Create object for new plants from form submission - KL
 function handleSubmit(e) {
   e.preventDefault();
   const newPlant = {
@@ -77,25 +77,17 @@ function handleSubmit(e) {
     description: newForm.description.value,
     favorite: document.querySelector("#new-favorite").checked,
   };
-
-  //postJSON(newPlant)
-  console.log(newPlant);
+  //POST request that adds new plant to db.json file - VJ
+  fetch("http://localhost:3000/plants", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(newPlant),
+  });
   newForm.reset();
 }
-
-// Post new plant to server
-// const postJSON = (data, url = 'http://localhost:3000/plants/') => {
-//     return fetch(url, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json", Accept: "application/json" },
-//       body: JSON.stringify(data),
-//     }).then((response) => {
-//       if (!response.ok) {
-//         throw response.statusText;
-//       }
-//       return response.json();
-//     });
-//   };
 
 //*function to change favorite button depending on favorite.ifTrue
 function updateButtonDisplay(isTrue) {
