@@ -1,8 +1,11 @@
 //Initial GET request from db.json file
 fetch("http://localhost:3000/plants")
-  .then(response => response.json())
-  .then(plants => createPlantList(plants))
-  .catch(error => alert("You forgot to set up your server!"));
+  .then((response) => response.json())
+  .then((plants) => {
+    displayPlantCard(plants[0]);
+    createPlantList(plants);
+  })
+  .catch((error) => alert("You forgot to set up your server!")); //! ErrorAlert occurs while server is running.  Might be local user error -jason
 
 const plantListDiv = document.getElementById("plant-list");
 
@@ -10,13 +13,13 @@ const plantListDiv = document.getElementById("plant-list");
 //Adds mouseover event to each plantListName div
 //Adds click event to each plantListName div
 function createPlantList(plants) {
-  plants.forEach(plant => {
+  plants.forEach((plant) => {
     const plantListName = document.createElement("div");
     plantListName.textContent = plant.name;
-    plantListName.addEventListener("mouseover", event => {
+    plantListName.addEventListener("mouseover", (event) => {
       console.log("mouseover");
     });
-    plantListName.addEventListener("click", event => {
+    plantListName.addEventListener("click", (event) => {
       displayPlantCard();
     });
     plantListDiv.append(plantListName);
@@ -28,7 +31,16 @@ function createPlantList(plants) {
 //Card has a form submission that edits information about the card
 //Card has an Add to Favorites button
 //Card has a Delete button
-function displayPlantCard() {}
+const displayPlantCard = (plant) => {
+  const plantName = document.querySelector("#plant-name");
+  plantName.textContent = plant.name;
+  const plantImage = document.querySelector("#plant-image");
+  plantImage.src = plant.image;
+  const plantDescription = document.querySelector("#plant-description");
+  plantDescription.textContent = plant.description;
+  const favoriteButton = document.querySelector("#add-favorite");
+  const deleteButton = document.querySelector("#delete");
+};
 
 // Add plant form with event listener
 const newForm = document.querySelector("#new-plant");
