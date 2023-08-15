@@ -23,10 +23,10 @@ function createPlantList(plants) {
   plants.forEach((plant) => {
     const plantListName = document.createElement("div");
     plantListName.textContent = plant.name;
-    plantListName.addEventListener("mouseover", (event) => {
+    plantListName.addEventListener("mouseover", () => {
       console.log("mouseover");
     });
-    plantListName.addEventListener("click", (event) => {
+    plantListName.addEventListener("click", () => {
       isFavoriteTrue = plant.favorite; //* sets favorite button textContent
       currentPlant = plant;
       displayPlantCard(plant);
