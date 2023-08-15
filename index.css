@@ -30,3 +30,9 @@ textarea {
 #plant-name {
   color: #250902;
 }
+
+.list-style {
+  font-family: Courier New;
+  font-size: 40px;
+  color: green;
+}
