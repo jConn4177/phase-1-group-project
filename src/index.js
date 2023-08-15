@@ -4,7 +4,8 @@ let currentPlant; //* necessary for patch
 
 //*Initial GET request from db.json file
 fetch(url)
-  .then((response) => response.json())
+
+  .then(response => response.json())
   .then((plants) => {
     isFavoriteTrue = plants[0].favorite; //* Sets favorite button default
     updateButtonDisplay(isFavoriteTrue); //*Sets favorite button
@@ -12,7 +13,7 @@ fetch(url)
     createPlantList(plants);
     currentPlant = plants[0];
   })
-  .catch((error) => alert("You forgot to set up your server!"));
+  .catch(error => alert("You forgot to set up your server!"));
 
 const plantListDiv = document.getElementById("plant-list");
 
@@ -20,11 +21,15 @@ const plantListDiv = document.getElementById("plant-list");
 //*Adds mouseover event to each plantListName div
 //*Adds click event to each plantListName div
 function createPlantList(plants) {
-  plants.forEach((plant) => {
+  plants.forEach(plant => {
     const plantListName = document.createElement("div");
     plantListName.textContent = plant.name;
-    plantListName.addEventListener("mouseover", (event) => {
-      console.log("mouseover");
+    plantListName.classList.add("list-style");
+    plantListName.addEventListener("mouseover", event => {
+      plantListName.classList.add("list-style-hover");
+    });
+    plantListName.addEventListener("mouseleave", event => {
+      plantListName.classList.remove("list-style-hover");
     });
     plantListName.addEventListener("click", (event) => {
       isFavoriteTrue = plant.favorite; //* sets favorite button textContent
@@ -36,7 +41,7 @@ function createPlantList(plants) {
 }
 
 //*Renders Plant Card Display
-const displayPlantCard = (plant) => {
+const displayPlantCard = plant => {
   const plantName = document.querySelector("#plant-name");
   plantName.textContent = plant.name;
   const plantImage = document.querySelector("#plant-image");
@@ -102,7 +107,7 @@ function updateButtonDisplay(isTrue) {
 }
 
 //* Updates the favorite
-const updateFavorite = (plantObj) => {
+const updateFavorite = plantObj => {
   const updatedPlant = { ...plantObj };
   updatedPlant.favorite = !updatedPlant.favorite;
   patchJSON(url + `/${plantObj.id}`, { favorite: updatedPlant.favorite }).then(
@@ -114,10 +119,10 @@ const updateFavorite = (plantObj) => {
 };
 
 //* Deletes a plant from db.json
-const deletePlant = (plantObj) => {
-  getJSON(url).then((plants) => {
+const deletePlant = plantObj => {
+  getJSON(url).then(plants => {
     deleteJSON(url + `/${plantObj.id}`);
-    const plantIndex = plants.findIndex((plant) => plant.id === plantObj.id);
+    const plantIndex = plants.findIndex(plant => plant.id === plantObj.id);
     if (plantIndex !== -1 && plantIndex < plants.length - 1) {
       currentPlant = plants[plantIndex + 1];
       displayPlantCard(plants[plantIndex + 1]);
