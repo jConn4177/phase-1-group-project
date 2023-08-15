@@ -31,8 +31,23 @@ textarea {
   color: #250902;
 }
 
+/* Plant list style - VJ */
+#plant-list-header {
+  font-family: Courier New;
+  font-weight: bold;
+  font-size: 80px;
+  color: rgb(9, 98, 9);
+}
+
 .list-style {
   font-family: Courier New;
   font-size: 40px;
-  color: green;
+  color: rgb(9, 98, 9);
+}
+
+.list-style-hover {
+  font-family: Courier New;
+  font-weight: bold;
+  font-size: 60px;
+  color: rgb(9, 98, 9);
 }

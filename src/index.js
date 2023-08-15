@@ -25,7 +25,10 @@ function createPlantList(plants) {
     plantListName.textContent = plant.name;
     plantListName.classList.add("list-style");
     plantListName.addEventListener("mouseover", event => {
-      console.log("mouseover");
+      plantListName.classList.add("list-style-hover");
+    });
+    plantListName.addEventListener("mouseleave", event => {
+      plantListName.classList.remove("list-style-hover");
     });
     plantListName.addEventListener("click", event => {
       isFavoriteTrue = Boolean(plant.favorite); //* sets favorite button textContent
