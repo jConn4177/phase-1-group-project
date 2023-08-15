@@ -32,3 +32,12 @@ const patchJSON = (url, data) => {
     return response.json();
   });
 };
+
+function deleteJSON(url) {
+  return fetch(url, { method: "DELETE" }).then((res) => {
+    if (!res.ok) {
+      throw "Failed to Delete!!!";
+    }
+    return "Record Deleted";
+  });
+}
