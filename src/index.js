@@ -4,16 +4,15 @@ let currentPlant; //* necessary for patch
 
 //*Initial GET request from db.json file
 fetch(url)
-
-  .then(response => response.json())
+  .then((response) => response.json())
   .then((plants) => {
     isFavoriteTrue = plants[0].favorite; //* Sets favorite button default
     updateButtonDisplay(isFavoriteTrue); //*Sets favorite button
-    displayPlantCard(plants[0]); //*Sets first plant as default card
+    // displayPlantCard(plants[0]); //*Sets first plant as default card
     createPlantList(plants);
     currentPlant = plants[0];
   })
-  .catch(error => alert("You forgot to set up your server!"));
+  .catch((error) => alert("You forgot to set up your server!"));
 
 const plantListDiv = document.getElementById("plant-list");
 
@@ -21,14 +20,14 @@ const plantListDiv = document.getElementById("plant-list");
 //*Adds mouseover event to each plantListName div
 //*Adds click event to each plantListName div
 function createPlantList(plants) {
-  plants.forEach(plant => {
+  plants.forEach((plant) => {
     const plantListName = document.createElement("div");
     plantListName.textContent = plant.name;
     plantListName.classList.add("list-style");
-    plantListName.addEventListener("mouseover", event => {
+    plantListName.addEventListener("mouseover", (event) => {
       plantListName.classList.add("list-style-hover");
     });
-    plantListName.addEventListener("mouseleave", event => {
+    plantListName.addEventListener("mouseleave", (event) => {
       plantListName.classList.remove("list-style-hover");
     });
     plantListName.addEventListener("click", (event) => {
@@ -41,7 +40,7 @@ function createPlantList(plants) {
 }
 
 //*Renders Plant Card Display
-const displayPlantCard = plant => {
+const displayPlantCard = (plant) => {
   const plantName = document.querySelector("#plant-name");
   plantName.textContent = plant.name;
   const plantImage = document.querySelector("#plant-image");
@@ -107,7 +106,7 @@ function updateButtonDisplay(isTrue) {
 }
 
 //* Updates the favorite
-const updateFavorite = plantObj => {
+const updateFavorite = (plantObj) => {
   const updatedPlant = { ...plantObj };
   updatedPlant.favorite = !updatedPlant.favorite;
   patchJSON(url + `/${plantObj.id}`, { favorite: updatedPlant.favorite }).then(
@@ -119,10 +118,10 @@ const updateFavorite = plantObj => {
 };
 
 //* Deletes a plant from db.json
-const deletePlant = plantObj => {
-  getJSON(url).then(plants => {
+const deletePlant = (plantObj) => {
+  getJSON(url).then((plants) => {
     deleteJSON(url + `/${plantObj.id}`);
-    const plantIndex = plants.findIndex(plant => plant.id === plantObj.id);
+    const plantIndex = plants.findIndex((plant) => plant.id === plantObj.id);
     if (plantIndex !== -1 && plantIndex < plants.length - 1) {
       currentPlant = plants[plantIndex + 1];
       displayPlantCard(plants[plantIndex + 1]);
@@ -148,44 +147,40 @@ const favoriteButtonClickHandler = () => {
 // KL UPDATES
 //Favorites GET request from db.json file
 fetch("http://localhost:3000/plants")
-  .then(response => response.json())
-  .then(plants => {
-    favoritePlant(plants)
+  .then((response) => response.json())
+  .then((plants) => {
+    favoritePlant(plants);
+  });
 
-  })
-
-const faveArr = []
+const faveArr = [];
 
 function favoritePlant(plants) {
   for (let i = 0; i < plants.length; i++) {
     if (plants[i].favorite === true) {
-      faveArr.push(plants[i])
+      faveArr.push(plants[i]);
     }
   }
-    renderFaves(faveArr)
-
-  }
+  renderFaves(faveArr);
+}
 
 let selectedFave; // Global variable
 
 //Add favorite plants to top bar
 function renderFaves(faveArr) {
   const favoritesContainer = document.getElementById("favorite-container");
-  console.log('hi')
-  faveArr.forEach(plant => {
-  const div = document.createElement('div')
-  const img = document.createElement('img')
-  img.src = plant.image
+  console.log("hi");
+  faveArr.forEach((plant) => {
+    const div = document.createElement("div");
+    const img = document.createElement("img");
+    img.src = plant.image;
 
-  div.append(img)
-  favoritesContainer.append(div)
-  
-  //Set for when favorite is clicked to do an action
-  img.addEventListener('click', (e) => {
-    selectedFave = plant
-    console.log(selectedFave)
+    div.append(img);
+    favoritesContainer.append(div);
 
-  })
-})
+    //Set for when favorite is clicked to do an action
+    img.addEventListener("click", (e) => {
+      selectedFave = plant;
+      console.log(selectedFave);
+    });
+  });
 }
-
