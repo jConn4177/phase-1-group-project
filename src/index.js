@@ -16,29 +16,34 @@ fetch("http://localhost:3000/plants")
 
 const plantListDiv = document.getElementById("plant-list");
 
-//createPlantList function creates a div for each plant - VJ
+//createPlantList function passes each plant to createPlantDiv function - VJ
+function createPlantList(plants) {
+  plants.forEach(plant => {
+    createPlantDiv(plant);
+  });
+}
+
+//createPlantDiv function creates a div for each plant - VJ
 //Adds mouseover event to each plantListName div - VJ
 //Adds mouseleave event to each plantListName div - VJ
 //Adds click event to each plantListName div - VJ
 //Appends each plantListName div to plantListDiv - VJ
-function createPlantList(plants) {
-  plants.forEach(plant => {
-    const plantListName = document.createElement("div");
-    plantListName.textContent = plant.name;
-    plantListName.classList.add("list-style");
-    plantListName.addEventListener("mouseover", event => {
-      plantListName.classList.add("list-style-hover");
-    });
-    plantListName.addEventListener("mouseleave", event => {
-      plantListName.classList.remove("list-style-hover");
-    });
-    plantListName.addEventListener("click", event => {
-      isFavoriteTrue = plant.favorite; //* sets favorite button textContent
-      currentPlant = plant;
-      displayPlantCard(plant);
-    });
-    plantListDiv.append(plantListName);
+function createPlantDiv(plant) {
+  const plantListName = document.createElement("div");
+  plantListName.textContent = plant.name;
+  plantListName.classList.add("list-style");
+  plantListName.addEventListener("mouseover", event => {
+    plantListName.classList.add("list-style-hover");
   });
+  plantListName.addEventListener("mouseleave", event => {
+    plantListName.classList.remove("list-style-hover");
+  });
+  plantListName.addEventListener("click", event => {
+    isFavoriteTrue = plant.favorite; //* sets favorite button textContent
+    currentPlant = plant;
+    displayPlantCard(plant);
+  });
+  plantListDiv.append(plantListName);
 }
 
 //*Renders Plant Card Display
@@ -77,6 +82,8 @@ function handleSubmit(e) {
     description: newForm.description.value,
     favorite: document.querySelector("#new-favorite").checked,
   };
+  //Newly created plant passed to createPlantDiv function - VJ
+  createPlantDiv(newPlant);
   //POST request that adds new plant to db.json file - VJ
   fetch("http://localhost:3000/plants", {
     method: "POST",
