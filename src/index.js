@@ -134,7 +134,6 @@ function updateButtonDisplay(isTrue) {
   }
 }
 
-
 //* Updates the favorite -Jason
 const updateFavorite = plantObj => {
   const updatedPlant = { ...plantObj };
@@ -200,17 +199,17 @@ function renderFave(plant) {
 let showAddForm = false; // Set to false for use in toggling
 
 document.addEventListener("DOMContentLoaded", () => {
-  const addBtn = document.querySelector('#addBtn')
-  const formContainer = document.querySelector('#new-plant')
-  addBtn.addEventListener('click', () => {
+  const addBtn = document.querySelector("#addBtn");
+  const formContainer = document.querySelector("#new-plant");
+  addBtn.addEventListener("click", () => {
     // Upon clicking showAddForm is now set to true
     showAddForm = !showAddForm;
     if (showAddForm) {
-      formContainer.style.display = "block"
-      addBtn.textContent = "Done adding"
+      formContainer.style.display = "block";
+      addBtn.textContent = "Done adding";
     } else {
-      formContainer.style.display = "none"
-      addBtn.textContent = "Add New"
+      formContainer.style.display = "none";
+      addBtn.textContent = "Add New";
     }
-})
-})
+  });
+});
