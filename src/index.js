@@ -1,8 +1,11 @@
 const imageUrl =
   "https://images.unsplash.com/photo-1502810365585-56ffa361fdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBsYW50JTIwZHJhd2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60";
-const url = "http://localhost:3000/plants"; //*Sets url
-let isFavoriteTrue; //* necessary for favorite button function
-let currentPlant; //* necessary for patch
+const url = "http://localhost:3000/plants"; //*Sets url -Jason
+let isFavoriteTrue; //* necessary for favorite button function -Jason
+let currentPlant; //* necessary for patch -Jason
+const plantImage = document.querySelector("#plant-image");
+const plantName = document.querySelector("#plant-name");
+const plantDescription = document.querySelector("#plant-description");
 
 //*Initial GET request from db.json file
 fetch(url)
@@ -43,11 +46,8 @@ function createPlantList(plants) {
 
 //*Renders Plant Card Display
 const displayPlantCard = (plant) => {
-  const plantName = document.querySelector("#plant-name");
   plantName.textContent = plant.name;
-  const plantImage = document.querySelector("#plant-image");
   plantImage.src = plant.image;
-  const plantDescription = document.querySelector("#plant-description");
   plantDescription.textContent = plant.description;
   const favoriteButton = document.querySelector("#favorite-btn");
   isFavoriteTrue = plant.favorite;
@@ -122,7 +122,10 @@ const updateFavorite = (plantObj) => {
 //* Deletes a plant from db.json
 const deletePlant = (plantObj) => {
   deleteJSON(url + `/${plantObj.id}`);
-  plantImage = imageUrl;
+  plantImage.src = imageUrl;
+  plantName.textContent = "Plant Babies";
+  plantDescription.textContent =
+    "lorem ipsum dolor sit amet, consectetur adipiscing";
 };
 
 //* Named function for the "Add to Favorites" button click event
