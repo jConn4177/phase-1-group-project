@@ -77,6 +77,11 @@ function handleSubmit(e) {
     favorite: document.querySelector("#new-favorite").checked,
   };
 
+  // Automatically add plant to favorites bar if selected
+  if (document.querySelector("#new-favorite").checked) {
+    renderFave(newPlant)
+    }
+
   //postJSON(newPlant)
   console.log(newPlant);
   newForm.reset();
@@ -145,7 +150,6 @@ const favoriteButtonClickHandler = () => {
   updateFavorite(currentPlant);
 };
 
-// KL UPDATES
 //Favorites GET request from db.json file
 fetch("http://localhost:3000/plants")
   .then(response => response.json())
@@ -162,23 +166,21 @@ function favoritePlant(plants) {
       faveArr.push(plants[i])
     }
   }
-    renderFaves(faveArr)
+    faveArr.forEach(plant => renderFave(plant))
 
   }
 
 let selectedFave; // Global variable
 
 //Add favorite plants to top bar
-function renderFaves(faveArr) {
-  const favoritesContainer = document.getElementById("favorite-container");
-  console.log('hi')
-  faveArr.forEach(plant => {
-  const div = document.createElement('div')
+function renderFave(plant) {
+  const favePlaceholder = document.querySelector('#fave-placeholder')
+  // Hides placeholder image and caption when a favorite exists
+  favePlaceholder.style.display = 'none'
+  const favoriteContainer = document.getElementById("favorite-container");
   const img = document.createElement('img')
   img.src = plant.image
-
-  div.append(img)
-  favoritesContainer.append(div)
+  favoriteContainer.append(img)
   
   //Set for when favorite is clicked to do an action
   img.addEventListener('click', (e) => {
@@ -186,6 +188,5 @@ function renderFaves(faveArr) {
     console.log(selectedFave)
 
   })
-})
 }
 
