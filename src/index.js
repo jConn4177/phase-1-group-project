@@ -121,19 +121,19 @@ const updateFavorite = (plantObj) => {
 const deletePlant = (plantObj) => {
   getJSON(url).then((plants) => {
     deleteJSON(url + `/${plantObj.id}`);
-    const plantIndex = plants.findIndex((plant) => plant.id === plantObj.id);
-    if (plantIndex !== -1 && plantIndex < plants.length - 1) {
-      currentPlant = plants[plantIndex + 1];
-      displayPlantCard(plants[plantIndex + 1]);
-    } else {
-      //* Display a default state if there is no next plant
-      displayPlantCard({
-        name: "",
-        image: "",
-        description: "",
-        favorite: false,
-      });
-    }
+    //     const plantIndex = plants.findIndex((plant) => plant.id === plantObj.id);
+    //     if (plantIndex !== -1 && plantIndex < plants.length - 1) {
+    //       currentPlant = plants[plantIndex + 1];
+    //       displayPlantCard(plants[plantIndex + 1]);
+    //     } else {
+    //       //* Display a default state if there is no next plant
+    //       displayPlantCard({
+    //         name: "",
+    //         image: "",
+    //         description: "",
+    //         favorite: false,
+    //       });
+    //     }
   });
 };
 
