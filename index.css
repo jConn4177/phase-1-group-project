@@ -77,3 +77,15 @@ textarea {
 #fave-caption {
   color: white;
 }
+
+#new-plant {
+  display: none;
+}
+
+#form-container {
+  display: flex;
+}
+
+#addBtn {
+  margin: 10px;
+}
