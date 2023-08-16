@@ -99,6 +99,12 @@ function handleSubmit(e) {
     description: newForm.description.value,
     favorite: document.querySelector("#new-favorite").checked,
   };
+
+  // Automatically add plant to favorites bar if selected
+  if (document.querySelector("#new-favorite").checked) {
+    renderFave(newPlant)
+    }
+
   //POST request that adds new plant to db.json file - VJ
   //Newly created plant passed to createPlantDiv function - VJ
   fetch("http://localhost:3000/plants", {
@@ -153,7 +159,6 @@ const favoriteButtonClickHandler = () => {
   updateFavorite(currentPlant);
 };
 
-// KL UPDATES
 //Favorites GET request from db.json file
 fetch("http://localhost:3000/plants")
   .then(response => response.json())
@@ -169,27 +174,25 @@ function favoritePlant(plants) {
       faveArr.push(plants[i]);
     }
   }
-  renderFaves(faveArr);
+    faveArr.forEach(plant => renderFave(plant))
 }
+
 
 let selectedFave; // Global variable
 
 //Add favorite plants to top bar
-function renderFaves(faveArr) {
-  const favoritesContainer = document.getElementById("favorite-container");
-  console.log("hi");
-  faveArr.forEach(plant => {
-    const div = document.createElement("div");
-    const img = document.createElement("img");
-    img.src = plant.image;
-
-    div.append(img);
-    favoritesContainer.append(div);
-
-    //Set for when favorite is clicked to do an action
-    img.addEventListener("click", e => {
-      selectedFave = plant;
-      console.log(selectedFave);
-    });
-  });
+function renderFave(plant) {
+  const favePlaceholder = document.querySelector('#fave-placeholder')
+  // Hides placeholder image and caption when a favorite exists
+  favePlaceholder.style.display = 'none'
+  const favoriteContainer = document.getElementById("favorite-container");
+  const img = document.createElement('img')
+  img.src = plant.image
+  favoriteContainer.append(img)
+  
+  //Set for when favorite is clicked to do an action
+  img.addEventListener('click', (e) => {
+    selectedFave = plant
+    console.log(selectedFave)
+  })
 }

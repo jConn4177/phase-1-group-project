@@ -69,3 +69,11 @@ textarea {
   font-size: 60px;
   color: rgb(9, 98, 9);
 }
+
+#fave-placeholder {
+  display: visible;
+}
+
+#fave-caption {
+  color: white;
+}
