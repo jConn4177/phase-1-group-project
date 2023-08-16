@@ -1,3 +1,5 @@
+const imageUrl =
+  "https://images.unsplash.com/photo-1502810365585-56ffa361fdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBsYW50JTIwZHJhd2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60";
 const url = "http://localhost:3000/plants"; //*Sets url
 let isFavoriteTrue; //* necessary for favorite button function
 let currentPlant; //* necessary for patch
@@ -119,22 +121,8 @@ const updateFavorite = (plantObj) => {
 
 //* Deletes a plant from db.json
 const deletePlant = (plantObj) => {
-  getJSON(url).then((plants) => {
-    deleteJSON(url + `/${plantObj.id}`);
-    //     const plantIndex = plants.findIndex((plant) => plant.id === plantObj.id);
-    //     if (plantIndex !== -1 && plantIndex < plants.length - 1) {
-    //       currentPlant = plants[plantIndex + 1];
-    //       displayPlantCard(plants[plantIndex + 1]);
-    //     } else {
-    //       //* Display a default state if there is no next plant
-    //       displayPlantCard({
-    //         name: "",
-    //         image: "",
-    //         description: "",
-    //         favorite: false,
-    //       });
-    //     }
-  });
+  deleteJSON(url + `/${plantObj.id}`);
+  plantImage = imageUrl;
 };
 
 //* Named function for the "Add to Favorites" button click event
