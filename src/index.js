@@ -29,9 +29,6 @@ fetch("http://localhost:3000/plants")
   .then(response => response.json())
   .then(plants => {
     hideButtons();
-    // isFavoriteTrue = plants[0].favorite; //* Sets favorite button default
-    // updateButtonDisplay(isFavoriteTrue); //*Sets favorite button
-    //! displayPlantCard(plants[0]); //* Deprecated code to set card default to first favorite plant listed in array -Jason
     createPlantList(plants);
     currentPlant = plants;
   })

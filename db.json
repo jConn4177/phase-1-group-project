@@ -12,7 +12,7 @@
       "name": "Peace Lily",
       "image": "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
       "description": "Prominant, white blooms are called spathes. Prefers bright, indirect light. Keep soil comsistently moist but not soggy. Prefers humidity.",
-      "favorite": false
+      "favorite": true
     },
     {
       "id": 4,
