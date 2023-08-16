@@ -3,16 +3,34 @@ const imageUrl =
 const url = "http://localhost:3000/plants"; //*Sets url -Jason
 let isFavoriteTrue; //* necessary for favorite button function -Jason
 let currentPlant; //* necessary for patch -Jason
+let showButtons = true;
 const plantImage = document.querySelector("#plant-image");
 const plantName = document.querySelector("#plant-name");
 const plantDescription = document.querySelector("#plant-description");
+const cardButtons = document.querySelector("#btn-container");
+
+//* seekButton function to find card buttons -Jason
+const seekButton = () => {
+  showButtons = true;
+  if (showButtons) {
+    cardButtons.style.display = "block";
+  }
+};
+//* HideButton function to hide card buttons -Jason
+const hideButtons = () => {
+  showButtons = false;
+  if (!showButtons) {
+    cardButtons.style.display = "none";
+  }
+};
 
 //*Initial GET request from db.json file
 fetch(url)
   .then((response) => response.json())
   .then((plants) => {
-    isFavoriteTrue = plants[0].favorite; //* Sets favorite button default
-    updateButtonDisplay(isFavoriteTrue); //*Sets favorite button
+    hideButtons();
+    // isFavoriteTrue = plants[0].favorite; //* Sets favorite button default
+    // updateButtonDisplay(isFavoriteTrue); //*Sets favorite button
     //! displayPlantCard(plants[0]); //* Deprecated code to set card default to first favorite plant listed in array -Jason
     createPlantList(plants);
     currentPlant = plants[0];
@@ -52,6 +70,7 @@ const displayPlantCard = (plant) => {
   const favoriteButton = document.querySelector("#favorite-btn");
   isFavoriteTrue = plant.favorite;
   updateButtonDisplay(isFavoriteTrue);
+  seekButton();
   favoriteButton.removeEventListener("click", favoriteButtonClickHandler); //*Remove existing event listener before adding a new one
   favoriteButton.addEventListener("click", favoriteButtonClickHandler); //*Add event listener with a named function
   const deleteButton = document.querySelector("#delete");
@@ -119,16 +138,17 @@ const updateFavorite = (plantObj) => {
   );
 };
 
-//* Deletes a plant from db.json
+//* Deletes a plant from db.json -Jason
 const deletePlant = (plantObj) => {
   deleteJSON(url + `/${plantObj.id}`);
   plantImage.src = imageUrl;
   plantName.textContent = "Plant Babies";
   plantDescription.textContent =
     "lorem ipsum dolor sit amet, consectetur adipiscing";
+  hideButtons();
 };
 
-//* Named function for the "Add to Favorites" button click event
+//* Named function for the "Add to Favorites" button click event -Jason
 const favoriteButtonClickHandler = () => {
   isFavoriteTrue = !isFavoriteTrue;
   updateButtonDisplay(isFavoriteTrue);
