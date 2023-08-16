@@ -25,7 +25,7 @@ const hideButtons = () => {
 };
 
 //Initial GET request from db.json file sent to createPlantList function w/ error catch - VJ
-fetch("http://localhost:3000/plants")  
+fetch("http://localhost:3000/plants")
   .then(response => response.json())
   .then(plants => {
     hideButtons();
@@ -42,6 +42,7 @@ function createPlantList(plants) {
 }
 
 //createPlantDiv function creates a div for each plant - VJ
+//Sets div ID to plant ID to assist with delete function - VJ
 //Adds mouseover event to each plantListName div - VJ
 //Adds mouseleave event to each plantListName div - VJ
 //Adds click event to each plantListName div - VJ
@@ -49,7 +50,7 @@ function createPlantList(plants) {
 function createPlantDiv(plant) {
   const plantListName = document.createElement("div");
   plantListName.textContent = plant.name;
-  plantListName.setAttribute("id", `${plant.id}_${plant.name}`);
+  plantListName.setAttribute("id", `${plant.id}`);
   plantListName.classList.add("list-style");
   plantListName.addEventListener("mouseover", event => {
     plantListName.classList.add("list-style-hover");
@@ -66,7 +67,7 @@ function createPlantDiv(plant) {
 }
 
 //*Renders Plant Card Display
-const displayPlantCard = (plant) => {
+const displayPlantCard = plant => {
   plantName.textContent = plant.name;
   plantImage.src = plant.image;
   plantDescription.textContent = plant.description;
@@ -102,8 +103,8 @@ function handleSubmit(e) {
 
   // Automatically add plant to favorites bar if selected
   if (document.querySelector("#new-favorite").checked) {
-    renderFave(newPlant)
-    }
+    renderFave(newPlant);
+  }
 
   //POST request that adds new plant to db.json file - VJ
   //Newly created plant passed to createPlantDiv function - VJ
@@ -131,7 +132,7 @@ function updateButtonDisplay(isTrue) {
 }
 
 //* Updates the favorite
-const updateFavorite = (plantObj) => {
+const updateFavorite = plantObj => {
   const updatedPlant = { ...plantObj };
   updatedPlant.favorite = !updatedPlant.favorite;
   patchJSON(url + `/${plantObj.id}`, { favorite: updatedPlant.favorite }).then(
@@ -143,13 +144,15 @@ const updateFavorite = (plantObj) => {
 };
 
 //* Deletes a plant from db.json -Jason
-const deletePlant = (plantObj) => {
+const deletePlant = plantObj => {
   deleteJSON(url + `/${plantObj.id}`);
   plantImage.src = imageUrl;
   plantName.textContent = "Plant Babies";
   plantDescription.textContent =
     "lorem ipsum dolor sit amet, consectetur adipiscing";
   hideButtons();
+  //Deletes same plant from plant list - VJ
+  document.getElementById(`${plantObj.id}`).remove();
 };
 
 //* Named function for the "Add to Favorites" button click event -Jason
@@ -174,25 +177,24 @@ function favoritePlant(plants) {
       faveArr.push(plants[i]);
     }
   }
-    faveArr.forEach(plant => renderFave(plant))
+  faveArr.forEach(plant => renderFave(plant));
 }
-
 
 let selectedFave; // Global variable
 
 //Add favorite plants to top bar
 function renderFave(plant) {
-  const favePlaceholder = document.querySelector('#fave-placeholder')
+  const favePlaceholder = document.querySelector("#fave-placeholder");
   // Hides placeholder image and caption when a favorite exists
-  favePlaceholder.style.display = 'none'
+  favePlaceholder.style.display = "none";
   const favoriteContainer = document.getElementById("favorite-container");
-  const img = document.createElement('img')
-  img.src = plant.image
-  favoriteContainer.append(img)
-  
+  const img = document.createElement("img");
+  img.src = plant.image;
+  favoriteContainer.append(img);
+
   //Set for when favorite is clicked to do an action
-  img.addEventListener('click', (e) => {
-    selectedFave = plant
-    console.log(selectedFave)
-  })
+  img.addEventListener("click", e => {
+    selectedFave = plant;
+    console.log(selectedFave);
+  });
 }
