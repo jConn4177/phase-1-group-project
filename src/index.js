@@ -1,56 +1,79 @@
-const url = "http://localhost:3000/plants"; //*Sets url
-let isFavoriteTrue; //* necessary for favorite button function
-let currentPlant; //* necessary for patch
+const imageUrl =
+  "https://images.unsplash.com/photo-1502810365585-56ffa361fdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBsYW50JTIwZHJhd2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60";
+const url = "http://localhost:3000/plants"; //*Sets url -Jason
+let isFavoriteTrue; //* necessary for favorite button function -Jason
+let currentPlant; //* necessary for patch -Jason
+let showButtons = true;
+const plantImage = document.querySelector("#plant-image");
+const plantName = document.querySelector("#plant-name");
+const plantDescription = document.querySelector("#plant-description");
+const cardButtons = document.querySelector("#btn-container");
 
-//*Initial GET request from db.json file
-fetch(url)
+//* seekButton function to find card buttons -Jason
+const seekButton = () => {
+  showButtons = true;
+  if (showButtons) {
+    cardButtons.style.display = "block";
+  }
+};
+//* HideButton function to hide card buttons -Jason
+const hideButtons = () => {
+  showButtons = false;
+  if (!showButtons) {
+    cardButtons.style.display = "none";
+  }
+};
 
+//Initial GET request from db.json file sent to createPlantList function w/ error catch - VJ
+fetch("http://localhost:3000/plants")  
   .then(response => response.json())
-  .then((plants) => {
-    isFavoriteTrue = plants[0].favorite; //* Sets favorite button default
-    updateButtonDisplay(isFavoriteTrue); //*Sets favorite button
-    displayPlantCard(plants[0]); //*Sets first plant as default card
+  .then(plants => {
+    hideButtons();
     createPlantList(plants);
-    currentPlant = plants[0];
+    currentPlant = plants;
   })
-  .catch(error => alert("You forgot to set up your server!"));
+  .catch(error => alert("You likely forgot to set up your server!"));
 
 const plantListDiv = document.getElementById("plant-list");
 
-//*createPlantList function creates a div for each plant
-//*Adds mouseover event to each plantListName div
-//*Adds click event to each plantListName div
+//createPlantList function passes each plant to createPlantDiv function - VJ
 function createPlantList(plants) {
-  plants.forEach(plant => {
-    const plantListName = document.createElement("div");
-    plantListName.textContent = plant.name;
-    plantListName.classList.add("list-style");
-    plantListName.addEventListener("mouseover", event => {
-      plantListName.classList.add("list-style-hover");
-    });
-    plantListName.addEventListener("mouseleave", event => {
-      plantListName.classList.remove("list-style-hover");
-    });
-    plantListName.addEventListener("click", (event) => {
-      isFavoriteTrue = plant.favorite; //* sets favorite button textContent
-      currentPlant = plant;
-      displayPlantCard(plant);
-    });
-    plantListDiv.append(plantListName);
+  plants.forEach(plant => createPlantDiv(plant));
+}
+
+//createPlantDiv function creates a div for each plant - VJ
+//Adds mouseover event to each plantListName div - VJ
+//Adds mouseleave event to each plantListName div - VJ
+//Adds click event to each plantListName div - VJ
+//Appends each plantListName div to plantListDiv - VJ
+function createPlantDiv(plant) {
+  const plantListName = document.createElement("div");
+  plantListName.textContent = plant.name;
+  plantListName.setAttribute("id", `${plant.id}_${plant.name}`);
+  plantListName.classList.add("list-style");
+  plantListName.addEventListener("mouseover", event => {
+    plantListName.classList.add("list-style-hover");
   });
+  plantListName.addEventListener("mouseleave", event => {
+    plantListName.classList.remove("list-style-hover");
+  });
+  plantListName.addEventListener("click", event => {
+    isFavoriteTrue = plant.favorite; //* sets favorite button textContent
+    currentPlant = plant;
+    displayPlantCard(plant);
+  });
+  plantListDiv.append(plantListName);
 }
 
 //*Renders Plant Card Display
-const displayPlantCard = plant => {
-  const plantName = document.querySelector("#plant-name");
+const displayPlantCard = (plant) => {
   plantName.textContent = plant.name;
-  const plantImage = document.querySelector("#plant-image");
   plantImage.src = plant.image;
-  const plantDescription = document.querySelector("#plant-description");
   plantDescription.textContent = plant.description;
   const favoriteButton = document.querySelector("#favorite-btn");
   isFavoriteTrue = plant.favorite;
   updateButtonDisplay(isFavoriteTrue);
+  seekButton();
   favoriteButton.removeEventListener("click", favoriteButtonClickHandler); //*Remove existing event listener before adding a new one
   favoriteButton.addEventListener("click", favoriteButtonClickHandler); //*Add event listener with a named function
   const deleteButton = document.querySelector("#delete");
@@ -63,11 +86,11 @@ const displayPlantCard = plant => {
   // addNote.addEventListener("click", () => {});
 };
 
-//* Add plant form with event listener
+// Add plant form with event listener - KL
 const newForm = document.querySelector("#new-plant");
 newForm.addEventListener("submit", handleSubmit);
 
-//* Create object for new plants
+// Create object for new plants from form submission - KL
 function handleSubmit(e) {
   e.preventDefault();
   const newPlant = {
@@ -82,24 +105,20 @@ function handleSubmit(e) {
     renderFave(newPlant)
     }
 
-  //postJSON(newPlant)
-  console.log(newPlant);
+  //POST request that adds new plant to db.json file - VJ
+  //Newly created plant passed to createPlantDiv function - VJ
+  fetch("http://localhost:3000/plants", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(newPlant),
+  })
+    .then(response => response.json())
+    .then(newPlant => createPlantDiv(newPlant));
   newForm.reset();
 }
-
-// Post new plant to server
-// const postJSON = (data, url = 'http://localhost:3000/plants/') => {
-//     return fetch(url, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json", Accept: "application/json" },
-//       body: JSON.stringify(data),
-//     }).then((response) => {
-//       if (!response.ok) {
-//         throw response.statusText;
-//       }
-//       return response.json();
-//     });
-//   };
 
 //*function to change favorite button depending on favorite.ifTrue
 function updateButtonDisplay(isTrue) {
@@ -112,7 +131,7 @@ function updateButtonDisplay(isTrue) {
 }
 
 //* Updates the favorite
-const updateFavorite = plantObj => {
+const updateFavorite = (plantObj) => {
   const updatedPlant = { ...plantObj };
   updatedPlant.favorite = !updatedPlant.favorite;
   patchJSON(url + `/${plantObj.id}`, { favorite: updatedPlant.favorite }).then(
@@ -123,27 +142,17 @@ const updateFavorite = plantObj => {
   );
 };
 
-//* Deletes a plant from db.json
-const deletePlant = plantObj => {
-  getJSON(url).then(plants => {
-    deleteJSON(url + `/${plantObj.id}`);
-    const plantIndex = plants.findIndex(plant => plant.id === plantObj.id);
-    if (plantIndex !== -1 && plantIndex < plants.length - 1) {
-      currentPlant = plants[plantIndex + 1];
-      displayPlantCard(plants[plantIndex + 1]);
-    } else {
-      //* Display a default state if there is no next plant
-      displayPlantCard({
-        name: "",
-        image: "",
-        description: "",
-        favorite: false,
-      });
-    }
-  });
+//* Deletes a plant from db.json -Jason
+const deletePlant = (plantObj) => {
+  deleteJSON(url + `/${plantObj.id}`);
+  plantImage.src = imageUrl;
+  plantName.textContent = "Plant Babies";
+  plantDescription.textContent =
+    "lorem ipsum dolor sit amet, consectetur adipiscing";
+  hideButtons();
 };
 
-//* Named function for the "Add to Favorites" button click event
+//* Named function for the "Add to Favorites" button click event -Jason
 const favoriteButtonClickHandler = () => {
   isFavoriteTrue = !isFavoriteTrue;
   updateButtonDisplay(isFavoriteTrue);
@@ -154,21 +163,20 @@ const favoriteButtonClickHandler = () => {
 fetch("http://localhost:3000/plants")
   .then(response => response.json())
   .then(plants => {
-    favoritePlant(plants)
+    favoritePlant(plants);
+  });
 
-  })
-
-const faveArr = []
+const faveArr = [];
 
 function favoritePlant(plants) {
   for (let i = 0; i < plants.length; i++) {
     if (plants[i].favorite === true) {
-      faveArr.push(plants[i])
+      faveArr.push(plants[i]);
     }
   }
     faveArr.forEach(plant => renderFave(plant))
+}
 
-  }
 
 let selectedFave; // Global variable
 
@@ -186,7 +194,5 @@ function renderFave(plant) {
   img.addEventListener('click', (e) => {
     selectedFave = plant
     console.log(selectedFave)
-
   })
 }
-
