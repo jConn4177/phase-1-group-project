@@ -1,22 +1,24 @@
+//*Global Declarations
 const imageUrl =
   "https://images.unsplash.com/photo-1502810365585-56ffa361fdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBsYW50JTIwZHJhd2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60";
 const url = "http://localhost:3000/plants"; //*Sets url -Jason
 let isFavoriteTrue; //* necessary for favorite button function -Jason
 let currentPlant; //* necessary for patch -Jason
 let showButtons = true;
+
+//*HTML Selectors
 const plantImage = document.querySelector("#plant-image");
 const plantName = document.querySelector("#plant-name");
 const plantDescription = document.querySelector("#plant-description");
 const cardButtons = document.querySelector("#btn-container");
 
-//* seekButton function to find card buttons -Jason
+//* Callback Functions
 const seekButton = () => {
   showButtons = true;
   if (showButtons) {
     cardButtons.style.display = "block";
   }
 };
-//* HideButton function to hide card buttons -Jason
 const hideButtons = () => {
   showButtons = false;
   if (!showButtons) {
@@ -31,6 +33,7 @@ fetch("http://localhost:3000/plants")
     hideButtons();
     createPlantList(plants);
     currentPlant = plants;
+    favoritePlant(plants);
   })
   .catch(error => alert("You likely forgot to set up your server!"));
 
@@ -121,7 +124,7 @@ function handleSubmit(e) {
   newForm.reset();
 }
 
-//*function to change favorite button depending on favorite.ifTrue
+//*function to change favorite button depending on favorite.ifTrue -Jason
 function updateButtonDisplay(isTrue) {
   const button = document.getElementById("favorite-btn");
   if (isTrue) {
@@ -131,7 +134,8 @@ function updateButtonDisplay(isTrue) {
   }
 }
 
-//* Updates the favorite
+
+//* Updates the favorite -Jason
 const updateFavorite = plantObj => {
   const updatedPlant = { ...plantObj };
   updatedPlant.favorite = !updatedPlant.favorite;
@@ -161,13 +165,6 @@ const favoriteButtonClickHandler = () => {
   updateButtonDisplay(isFavoriteTrue);
   updateFavorite(currentPlant);
 };
-
-//Favorites GET request from db.json file
-fetch("http://localhost:3000/plants")
-  .then(response => response.json())
-  .then(plants => {
-    favoritePlant(plants);
-  });
 
 const faveArr = [];
 
