@@ -92,7 +92,7 @@ input[type="submit"] {
 }
 
 #fave-placeholder {
-  display: visible;
+  display: block;
 }
 
 #fave-caption {
