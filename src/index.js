@@ -114,10 +114,7 @@ function handleSubmit(e) {
     favorite: document.querySelector("#new-favorite").checked,
   };
 
-  // Automatically add plant to favorites bar if selected
-  if (document.querySelector("#new-favorite").checked) {
-    renderFave(newPlant);
-  }
+  const favorite = document.querySelector("#new-favorite").checked
 
   //POST request that adds new plant to db.json file - VJ
   //Newly created plant passed to createPlantDiv function - VJ
@@ -130,8 +127,14 @@ function handleSubmit(e) {
     body: JSON.stringify(newPlant),
   })
     .then((response) => response.json())
-    .then((newPlant) => createPlantDiv(newPlant));
-  newForm.reset();
+    .then((newPlant) => {
+      createPlantDiv(newPlant)
+      // Automatically add plant to favorites bar if selected
+      if (favorite) {
+        renderFave(newPlant);
+      }
+    })
+    newForm.reset();
 }
 
 //*function to change favorite button depending on favorite.ifTrue -Jason
@@ -156,7 +159,9 @@ const updateFavorite = (plantObj) => {
         faveArr.push(updatedPlant)
         renderFave(updatedPlant)
       } else {
-        removeFromFaves(updatedPlant)
+        const removeImg = document.querySelector(`#fave-${plantObj.id}`)
+        removeImg.remove()
+        keepPlaceholder(updatedPlant)
       }
     }
   );
@@ -170,18 +175,21 @@ const deletePlant = (plantObj) => {
   plantDescription.textContent =
     "lorem ipsum dolor sit amet, consectetur adipiscing";
   hideButtons();
+  // If plant was marked as favorite, remove the image
+  if (plantObj.favorite) {
+    const removeImg = document.querySelector(`#fave-${plantObj.id}`)
+    removeImg.remove()
+    keepPlaceholder(currentPlant)
+  }
   //Deletes same plant from plant list - VJ
   document.getElementById(`${plantObj.id}`).remove();
-  // Updates favorite bar - KL
-  removeFromFaves(plantObj)
 };
 
-function removeFromFaves(plantObj) {
+function keepPlaceholder(plantObj) {
+  // Update faveArr
   faveArr = faveArr.filter(function( obj ) {
       return obj.name !== plantObj.name;
     })
-  const removeImg = document.querySelector(`[id='${plantObj.id}']`)
-  removeImg.remove()
   // If no favorites, show placeholder image
   if (document.querySelectorAll('#favorite-container > img').length === 0) {
       const favePlaceholder = document.querySelector("#fave-placeholder");
@@ -207,7 +215,7 @@ function renderFave(plant) {
   const favoriteContainer = document.getElementById("favorite-container");
   const img = document.createElement("img");
   img.src = plant.image;
-  img.id = plant.id;
+  img.id = `fave-${plant.id}`;
   favoriteContainer.append(img);
 
   //Set for when favorite is clicked to do an action
