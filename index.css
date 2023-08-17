@@ -2,6 +2,11 @@
   display: flex;
 }
 
+#card-container {
+  display: block;
+  max-width: 50%;
+}
+
 /* Add new plant button style - VJ */
 #addBtn {
   font-family: Courier New;
@@ -67,11 +72,6 @@ input[type="submit"] {
   cursor: pointer;
 }
 /* End of Add New Plant form style - VJ */
-
-.card {
-  background-color: #b7e4c7;
-  background-image: var(--bs-gradient);
-}
 
 #plant-name {
   color: #250902;

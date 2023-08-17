@@ -40,21 +40,23 @@
           <button id="addBtn">Add New Plant</button>
         </div>
       </div>
-      <div id="card-container" style="width: 50%;">
+      <div id="card-container">
         <img id="plant-image" src="https://images.unsplash.com/photo-1502810365585-56ffa361fdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBsYW50JTIwZHJhd2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" class="card-img">
-        <div class="card-body">
+        <div id="card-container" class=".container">
           <h5 id="plant-name" class="card-title">Plant Babies</h5>
-          <p id="plant-description" class="card-text">"lorem ipsum dolor sit amet, consectetur adipiscing"</p>
-          <p id="plant-note" class="card-text"></p>
+          <p id="plant-description">"lorem ipsum dolor sit amet, consectetur adipiscing"</p>
+          <p id="plant-note"></p>
           <div id="btn-container">
-            <button id="favorite-btn" href="#" class="btn btn-light">Add to Favorites</button>
-            <button id="delete" href="#" class="btn btn-danger">Delete</button>
-            <button id="update-description" href="#" class="btn btn-warning">Update Description</button>
-            <form id="update-description-form" hidden>
-              <input type="text" id="update-description-text" value="" />
-              <br />
-              <input type="submit" id="update-description-submit" value="Update Description" />
-            </form>
+            <button id="favorite-btn" class="btn btn-dark">Add to Favorites</button>
+            <button id="delete"class="btn btn-light">Delete</button>
+            <button id="update-description"class="btn btn-light">Update Description</button>
+            <div id="update-description-container">
+              <form id="update-description-form" hidden>
+                <input type="text" id="update-description-text" value="" />
+                <br />
+                <input type="submit" id="update-description-submit" value="Update Description" />
+              </form>
+            </div>
           </div>
         </div>
       </div>
