@@ -47,7 +47,7 @@ fetch("http://localhost:3000/plants")
   .then(plants => {
     hideButtons();
     createPlantList(plants);
-    currentPlant = plants;
+    //currentPlant = plants;
     favoritePlant(plants);
   })
   .catch(error => alert("You likely forgot to set up your server!"));
@@ -97,6 +97,34 @@ const displayPlantCard = plant => {
   // const addNote = document.querySelector("#note");
   // addNote.addEventListener("click", () => {});
 };
+
+//Click event listener for Update Description Button on plant card triggers toggleDescriptionForm function - VJ
+const descriptionButton = document.querySelector("#update-description");
+descriptionButton.addEventListener("click", () => {
+  toggleDescriptionForm();
+});
+
+//toggleDescriptionForm function changes visibility of updateDescriptionForm and changes text of Update Description Button - VJ
+const updateDescriptionForm = document.querySelector(
+  "#update-description-form"
+);
+function toggleDescriptionForm() {
+  if (updateDescriptionForm.getAttribute("hidden") === "") {
+    updateDescriptionForm.removeAttribute("hidden");
+    descriptionButton.textContent = "Done Updating";
+  } else {
+    updateDescriptionForm.setAttribute("hidden", "");
+    descriptionButton.textContent = "Update Description";
+  }
+}
+
+//Event listener for UpdateDeescriptionForm submission. - VJ
+updateDescriptionForm.addEventListener("submit", e => {
+  console.log("submitted");
+});
+
+// attched to currentPlant which is set on click of plantListName
+function updateDescription() {}
 
 // Add plant form with event listener - KL
 const newForm = document.querySelector("#new-plant");
