@@ -9,37 +9,51 @@
     },
     {
       "id": 2,
+      "name": "English Ivy",
+      "image": "https://images.unsplash.com/photo-1676131969304-27b006427503?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=388&q=80ß",
+      "description": "A woody vine that grows best indoors. Thrives in shade. Invasive plant that can threaten plants grown around it.",
+      "favorite": false
+    },
+    {
+      "id": 3,
+      "name": "Fiddle Leaf Fig",
+      "image": "https://images.unsplash.com/photo-1453904300235-0f2f60b15b5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=386&q=80",
+      "description": "Popular indoor tree. Has large, heavily veined leaves. Being very sensitive to improper watering, temperature, and environmental changes make them hard to care for. Likes a warm and humid environment away from drafts with plenty of light.",
+      "favorite": false
+    },
+    {
+      "id": 4,
       "name": "Monstera",
       "image": "https://images.unsplash.com/photo-1649460681436-46a7fde6ef08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=872&q=80",
       "description": "Also called the Swiss Cheese Plant. Prefers medium to bright, indirect light. Allow soil to completely dry between waterings. Prefers humidity.",
       "favorite": false
     },
     {
-      "id": 3,
+      "id": 5,
       "name": "Peace Lily",
       "image": "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
-      "description": "Prominant, white blooms are called spathes. Prefers bright, indirect light. Keep soil comsistently moist but not soggy. Prefers humidity.",
+      "description": "Prominent, white blooms are called spathes. Prefers bright, indirect light. Keep soil consistently moist but not soggy. Prefers humidity.",
       "favorite": false
     },
     {
-      "id": 4,
+      "id": 6,
       "name": "Pothos",
       "image": "https://images.unsplash.com/photo-1596724878582-76f1a8fdc24f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=928&q=80",
       "description": "Also called Devil's Ivy. Prefers bright, indirect light but can tolerate lower light conditions. Water shallowly when soil feels dry.",
       "favorite": false
     },
     {
-      "id": 5,
+      "id": 7,
       "name": "Snake Plant",
       "image": "https://images.unsplash.com/photo-1593482892540-73c9199d8949?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
       "description": "A popular, low-maintenance houseplant. Prefers medium, indirect light. Water lightly and infrequently.",
       "favorite": false
     },
     {
-      "id": 6,
+      "id": 8,
       "name": "Spider Plant",
       "image": "https://images.unsplash.com/photo-1572688484438-313a6e50c333?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80",
-      "description": "Easy to propogate spider babies and give as a gift! Prefers bright, indirect light. Allow soil to dry between waterings. Prefers humidity. ",
+      "description": "Easy to propagate spider babies and give as a gift! Prefers bright, indirect light. Allow soil to dry between waterings. Prefers humidity. ",
       "favorite": false
     }
   ]
