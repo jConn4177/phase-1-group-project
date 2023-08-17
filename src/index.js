@@ -104,14 +104,20 @@ descriptionButton.addEventListener("click", () => {
   toggleDescriptionForm();
 });
 
-//toggleDescriptionForm function changes visibility of updateDescriptionForm and changes text of Update Description Button - VJ
+//toggleDescriptionForm function changes visibility of updateDescriptionForm - VJ
+//function also changes text of Update Description Button - VJ
+//function also autopopulates fields with currentPlant description which is set on click of plant card - VJ
 const updateDescriptionForm = document.querySelector(
   "#update-description-form"
+);
+const updateDescriptionText = document.querySelector(
+  "#update-description-text"
 );
 function toggleDescriptionForm() {
   if (updateDescriptionForm.getAttribute("hidden") === "") {
     updateDescriptionForm.removeAttribute("hidden");
     descriptionButton.textContent = "Done Updating";
+    updateDescriptionText.setAttribute("value", `${currentPlant.description}`);
   } else {
     updateDescriptionForm.setAttribute("hidden", "");
     descriptionButton.textContent = "Update Description";
@@ -119,12 +125,24 @@ function toggleDescriptionForm() {
 }
 
 //Event listener for UpdateDeescriptionForm submission. - VJ
-updateDescriptionForm.addEventListener("submit", e => {
-  console.log("submitted");
+updateDescriptionForm.addEventListener("submit", event => {
+  event.preventDefault();
+  updateDescription();
+  //figure out how reset plays into repopulation of form - VJ????
+  //updateDescriptionForm.reset();
 });
 
-// attched to currentPlant which is set on click of plantListName
-function updateDescription() {}
+// updateDescription function sends PATCH request to db.json file - VJ
+function updateDescription() {
+  fetch(`http://localhost:3000/plants/${currentPlant.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ description: updateDescriptionText.value }),
+  });
+}
 
 // Add plant form with event listener - KL
 const newForm = document.querySelector("#new-plant");
