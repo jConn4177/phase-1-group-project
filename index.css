@@ -155,4 +155,10 @@ input[type="submit"] {
   align-items: center;
   margin: 10px;
 }
+
+#update-description-text {
+  font-family: Courier New;
+  color: rgb(71, 85, 85);
+  font-size: 18px;
+}
 /* Style for update description form ends - VJ */
