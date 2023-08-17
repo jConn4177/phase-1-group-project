@@ -92,6 +92,9 @@ const displayPlantCard = plant => {
   isFavoriteTrue = plant.favorite;
   updateButtonDisplay(isFavoriteTrue);
   seekButton();
+  //Each time the plant card renders, it hides the updateDescriptionForm - VJ
+  updateDescriptionForm.setAttribute("hidden", "");
+  descriptionButton.textContent = "Update Description";
   //*Note/comment
   // const plantNote = document.querySelector("#plant-note");
   // const addNote = document.querySelector("#note");
@@ -106,7 +109,7 @@ descriptionButton.addEventListener("click", () => {
 
 //toggleDescriptionForm function changes visibility of updateDescriptionForm - VJ
 //function also changes text of Update Description Button - VJ
-//function also autopopulates fields with currentPlant description which is set on click of plant card - VJ
+//function also autopopulates fields with currentPlant description which is set on click of plant card and when PATCH is successful - VJ
 const updateDescriptionForm = document.querySelector(
   "#update-description-form"
 );
@@ -116,7 +119,7 @@ const updateDescriptionText = document.querySelector(
 function toggleDescriptionForm() {
   if (updateDescriptionForm.getAttribute("hidden") === "") {
     updateDescriptionForm.removeAttribute("hidden");
-    descriptionButton.textContent = "Done Updating";
+    descriptionButton.textContent = "Do Not Update Description";
     updateDescriptionText.setAttribute("value", `${currentPlant.description}`);
   } else {
     updateDescriptionForm.setAttribute("hidden", "");
@@ -124,15 +127,15 @@ function toggleDescriptionForm() {
   }
 }
 
-//Event listener for UpdateDeescriptionForm submission. - VJ
+//Event listener for UpdateDeescriptionForm submission calls updateDescription function and calls displayPlantCard function on currentPlant. - VJ
 updateDescriptionForm.addEventListener("submit", event => {
   event.preventDefault();
   updateDescription();
-  //figure out how reset plays into repopulation of form - VJ????
-  //updateDescriptionForm.reset();
+  updateDescriptionForm.reset();
 });
 
-// updateDescription function sends PATCH request to db.json file - VJ
+//updateDescription function sends PATCH request to db.json file to update description - VJ
+//Upon response return it calls displayPlantCard function and resets currentPlant to reflect updated description - VJ
 function updateDescription() {
   fetch(`http://localhost:3000/plants/${currentPlant.id}`, {
     method: "PATCH",
@@ -141,7 +144,12 @@ function updateDescription() {
       Accept: "application/json",
     },
     body: JSON.stringify({ description: updateDescriptionText.value }),
-  });
+  })
+    .then(response => response.json())
+    .then(plant => {
+      displayPlantCard(plant);
+      currentPlant = plant;
+    });
 }
 
 // Add plant form with event listener - KL
