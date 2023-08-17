@@ -5,6 +5,7 @@ const url = "http://localhost:3000/plants"; //*Sets url -Jason
 let isFavoriteTrue; //* necessary for favorite button function -Jason
 let currentPlant; //* necessary for patch -Jason
 let showButtons = true;
+let allPlants;
 
 //*HTML Selectors
 const plantImage = document.querySelector("#plant-image");
@@ -47,7 +48,7 @@ fetch("http://localhost:3000/plants")
   .then(plants => {
     hideButtons();
     createPlantList(plants);
-    //currentPlant = plants;
+    allPlants = plants;
     favoritePlant(plants);
   })
   .catch(error => alert("You likely forgot to set up your server!"));
@@ -137,18 +138,18 @@ updateDescriptionForm.addEventListener("submit", event => {
 //updateDescription function sends PATCH request to db.json file to update description - VJ
 //Upon response return it calls displayPlantCard function and resets currentPlant to reflect updated description - VJ
 function updateDescription() {
+  currentPlant.description = updateDescriptionText.value;
   fetch(`http://localhost:3000/plants/${currentPlant.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    body: JSON.stringify({ description: updateDescriptionText.value }),
+    body: JSON.stringify(currentPlant),
   })
     .then(response => response.json())
     .then(plant => {
-      displayPlantCard(plant);
-      currentPlant = plant;
+      displayPlantCard(currentPlant);
     });
 }
 
