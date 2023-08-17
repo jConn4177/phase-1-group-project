@@ -227,7 +227,7 @@ const deletePlant = plantObj => {
   plantImage.src = imageUrl;
   plantName.textContent = "Plant Babies";
   plantDescription.textContent =
-    "lorem ipsum dolor sit amet, consectetur adipiscing";
+    "A place to see and keep track of all of your plants. Give it a name, image and description. Even feature your plant in the favorites bar at the top. Come back anytime to add plant updates!";
   hideButtons();
   // If plant was marked as favorite, remove the image
   if (plantObj.favorite) {
