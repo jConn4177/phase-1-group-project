@@ -18,13 +18,32 @@
   /* max-height: 500px; */
   background-color: #250902;
 }
+
+#plant-name {
+  max-width: 60%;
+  text-align: center;
+}
+
 #plant-description {
   max-width: 60%;
+  text-align: center;
 }
 
 #btn-container {
   font-family: Courier New;
   align-content: baseline;
+}
+
+#favorite-btn {
+  margin: 3px;
+}
+
+#delete {
+  margin: 3px;
+}
+
+#update-description {
+  margin: 3px;
 }
 
 /* Add new plant button style - VJ */
