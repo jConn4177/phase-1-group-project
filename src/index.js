@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
       addBtn.textContent = "Done adding";
     } else {
       formContainer.style.display = "none";
-      addBtn.textContent = "Add New";
+      addBtn.textContent = "Add New Plant";
     }
   });
 });
