@@ -1,3 +1,32 @@
+#main {
+  display: flex;
+}
+
+#card-container {
+  display: flex;
+  max-width: 50%;
+  font-family: Courier New;
+}
+
+#text-container {
+  padding-left: 50px;
+}
+
+#plant-image {
+  display: block;
+  max-width: 40%;
+  /* max-height: 500px; */
+  background-color: #250902;
+}
+#plant-description {
+  max-width: 60%;
+}
+
+#btn-container {
+  font-family: Courier New;
+  align-content: baseline;
+}
+
 /* Add new plant button style - VJ */
 #addBtn {
   font-family: Courier New;
@@ -64,11 +93,6 @@ input[type="submit"] {
   cursor: pointer;
 }
 /* End of Add New Plant form style - VJ */
-
-.card {
-  background-color: #b7e4c7;
-  background-image: var(--bs-gradient);
-}
 
 #plant-name {
   color: #250902;
