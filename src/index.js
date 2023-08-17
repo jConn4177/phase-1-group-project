@@ -181,6 +181,8 @@ function handleSubmit(e) {
     .then(response => response.json())
     .then(newPlant => {
       createPlantDiv(newPlant);
+      displayPlantCard(newPlant);
+      currentPlant = newPlant;
       // Automatically add plant to favorites bar if selected
       if (favorite) {
         renderFave(newPlant);
