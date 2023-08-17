@@ -1,3 +1,7 @@
+#main {
+  display: flex;
+}
+
 /* Add new plant button style - VJ */
 #addBtn {
   font-family: Courier New;
