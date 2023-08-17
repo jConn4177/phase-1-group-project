@@ -52,7 +52,7 @@ fetch("http://localhost:3000/plants")
   })
   .catch((error) => alert("You likely forgot to set up your server!"));
 
-const plantListDiv = document.getElementById("plant-list");
+const plantListDiv = document.getElementById("plant-list-container");
 
 //createPlantList function passes each plant to createPlantDiv function - VJ
 function createPlantList(plants) {
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
       addBtn.textContent = "Done adding";
     } else {
       formContainer.style.display = "none";
-      addBtn.textContent = "Add New";
+      addBtn.textContent = "Add New Plant";
     }
   });
 });
