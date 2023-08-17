@@ -23,9 +23,6 @@
   </head>
   <body>
     <header>
-      <div class="bg-dark collapse" id="navbarHeader">Plant Babies</div>
-    </header>
-    <main>
       <div id="favorite-container">
         <!---Populate favorite plants here-->
           <div id="fave-placeholder">
@@ -33,6 +30,8 @@
             <p id="fave-caption">My Favorites!</p>
           </div>
       </div>
+    </header>
+    <main>
       <div id="plant-list">
         <h1 id="plant-list-header">My Plant Babies</h1>
         <div id="plant-list-container">
@@ -40,8 +39,30 @@
         </div>
         <div>
           <button id="addBtn">Add New Plant</button>
-        </div>  
+        </div>
       </div>
+      <div class="card .bg-gradient" style="width: 18rem;">
+        <img id="plant-image" src="https://images.unsplash.com/photo-1502810365585-56ffa361fdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBsYW50JTIwZHJhd2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" class="card-img-top">
+        <div class="card-body">
+          <h5 id="plant-name" class="card-title">Plant Babies</h5>
+          <p id="plant-description" class="card-text">"lorem ipsum dolor sit amet, consectetur adipiscing"</p>
+          <p id="plant-note" class="card-text"></p>
+          <div id="btn-container">
+            <button id="favorite-btn" href="#" class="btn btn-light">Add to Favorites</button>
+            <button id="delete" href="#" class="btn btn-danger">Delete</button>
+            <button id="update-description" href="#" class="btn btn-warning">Update Description</button>
+            <form id="update-description-form" hidden>
+              <input type="text" id="update-description-text" value="" />
+              <br />
+              <input type="submit" id="update-description-submit" value="Update Description" />
+            </form>
+          </div>
+        </div>
+      </div>
+        <div></div>
+      </div>
+    </main>
+    <footer>
       <div id="form-container">
         <form id="new-plant">
           <h3>Add New Plant</h3>
@@ -70,26 +91,6 @@
           <input type="submit" name="submit" />
         </form>
       </div>
-      <div class="card .bg-gradient" style="width: 18rem;">
-        <img id="plant-image" src="https://images.unsplash.com/photo-1502810365585-56ffa361fdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBsYW50JTIwZHJhd2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" class="card-img-top">
-        <div class="card-body">
-          <h5 id="plant-name" class="card-title">Plant Babies</h5>
-          <p id="plant-description" class="card-text">"lorem ipsum dolor sit amet, consectetur adipiscing"</p>
-          <p id="plant-note" class="card-text"></p>
-          <div id="btn-container">
-            <button id="favorite-btn" href="#" class="btn btn-light">Add to Favorites</button>
-            <button id="delete" href="#" class="btn btn-danger">Delete</button>
-            <button id="update-description" href="#" class="btn btn-warning">Update Description</button>
-            <form id="update-description-form" hidden>
-              <input type="text" id="update-description-text" value="" />
-              <br />
-              <input type="submit" id="update-description-submit" value="Update Description" />
-            </form>
-          </div>
-        </div>
-      </div>
-        <div></div>
-      </div>
-    </main>
+    </footer>
   </body>
 </html>
