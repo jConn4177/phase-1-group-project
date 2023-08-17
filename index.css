@@ -52,6 +52,7 @@ textarea {
   resize: auto;
 }
 
+/* Styles submit button on Add New Plant form as well as on Update Description form - VJ */
 input[type="submit"] {
   font-family: Courier New;
   font-size: 18px;
@@ -145,3 +146,19 @@ input[type="submit"] {
   cursor: pointer;
 }
 /* End of plant list style - VJ */
+
+/* Style for update description form begins - VJ */
+#update-description-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+#update-description-text {
+  font-family: Courier New;
+  color: rgb(71, 85, 85);
+  font-size: 18px;
+}
+/* Style for update description form ends - VJ */

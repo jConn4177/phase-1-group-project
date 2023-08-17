@@ -120,7 +120,7 @@ function toggleDescriptionForm() {
   if (updateDescriptionForm.getAttribute("hidden") === "") {
     updateDescriptionForm.removeAttribute("hidden");
     descriptionButton.textContent = "Do Not Update Description";
-    updateDescriptionText.setAttribute("value", `${currentPlant.description}`);
+    updateDescriptionText.textContent = currentPlant.description;
   } else {
     updateDescriptionForm.setAttribute("hidden", "");
     descriptionButton.textContent = "Update Description";
