@@ -53,6 +53,7 @@ textarea {
 }
 
 input[type="submit"] {
+  font-family: Courier New;
   font-size: 18px;
   text-align: center;
   color: white;
@@ -106,6 +107,7 @@ input[type="submit"] {
   justify-content: center;
   align-items: center;
   width: 50%;
+  padding: 10px;
   margin: 10px;
   border-color: rgb(71, 85, 85);
   border-width: 3px;

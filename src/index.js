@@ -5,6 +5,7 @@ const url = "http://localhost:3000/plants"; //*Sets url -Jason
 let isFavoriteTrue; //* necessary for favorite button function -Jason
 let currentPlant; //* necessary for patch -Jason
 let showButtons = true;
+let allPlants;
 let faveArr = [];
 
 
@@ -45,20 +46,20 @@ const hideButtons = () => {
 
 //Initial GET request from db.json file sent to createPlantList function w/ error catch - VJ
 fetch("http://localhost:3000/plants")
-  .then((response) => response.json())
-  .then((plants) => {
+  .then(response => response.json())
+  .then(plants => {
     hideButtons();
     createPlantList(plants);
-    currentPlant = plants;
+    allPlants = plants;
     favoritePlant(plants);
   })
-  .catch((error) => alert("You likely forgot to set up your server!"));
+  .catch(error => alert("You likely forgot to set up your server!"));
 
 const plantListDiv = document.getElementById("plant-list-container");
 
 //createPlantList function passes each plant to createPlantDiv function - VJ
 function createPlantList(plants) {
-  plants.forEach((plant) => createPlantDiv(plant));
+  plants.forEach(plant => createPlantDiv(plant));
 }
 
 //createPlantDiv function creates a div for each plant - VJ
@@ -72,13 +73,13 @@ function createPlantDiv(plant) {
   plantListName.textContent = plant.name;
   plantListName.setAttribute("id", `${plant.id}`);
   plantListName.classList.add("list-style");
-  plantListName.addEventListener("mouseover", (event) => {
+  plantListName.addEventListener("mouseover", event => {
     plantListName.classList.add("list-style-hover");
   });
-  plantListName.addEventListener("mouseleave", (event) => {
+  plantListName.addEventListener("mouseleave", event => {
     plantListName.classList.remove("list-style-hover");
   });
-  plantListName.addEventListener("click", (event) => {
+  plantListName.addEventListener("click", event => {
     isFavoriteTrue = plant.favorite; //* sets favorite button textContent
     currentPlant = plant;
     displayPlantCard(plant);
@@ -87,18 +88,72 @@ function createPlantDiv(plant) {
 }
 
 //*Renders Plant Card Display
-const displayPlantCard = (plant) => {
+const displayPlantCard = plant => {
   plantName.textContent = plant.name;
   plantImage.src = plant.image;
   plantDescription.textContent = plant.description;
   isFavoriteTrue = plant.favorite;
   updateButtonDisplay(isFavoriteTrue);
   seekButton();
+  //Each time the plant card renders, it hides the updateDescriptionForm - VJ
+  updateDescriptionForm.setAttribute("hidden", "");
+  descriptionButton.textContent = "Update Description";
   //*Note/comment
   // const plantNote = document.querySelector("#plant-note");
   // const addNote = document.querySelector("#note");
   // addNote.addEventListener("click", () => {});
 };
+
+//Click event listener for Update Description Button on plant card triggers toggleDescriptionForm function - VJ
+const descriptionButton = document.querySelector("#update-description");
+descriptionButton.addEventListener("click", () => {
+  toggleDescriptionForm();
+});
+
+//toggleDescriptionForm function changes visibility of updateDescriptionForm - VJ
+//function also changes text of Update Description Button - VJ
+//function also autopopulates fields with currentPlant description which is set on click of plant card and when PATCH is successful - VJ
+const updateDescriptionForm = document.querySelector(
+  "#update-description-form"
+);
+const updateDescriptionText = document.querySelector(
+  "#update-description-text"
+);
+function toggleDescriptionForm() {
+  if (updateDescriptionForm.getAttribute("hidden") === "") {
+    updateDescriptionForm.removeAttribute("hidden");
+    descriptionButton.textContent = "Do Not Update Description";
+    updateDescriptionText.setAttribute("value", `${currentPlant.description}`);
+  } else {
+    updateDescriptionForm.setAttribute("hidden", "");
+    descriptionButton.textContent = "Update Description";
+  }
+}
+
+//Event listener for UpdateDeescriptionForm submission calls updateDescription function and calls displayPlantCard function on currentPlant. - VJ
+updateDescriptionForm.addEventListener("submit", event => {
+  event.preventDefault();
+  updateDescription();
+  updateDescriptionForm.reset();
+});
+
+//updateDescription function sends PATCH request to db.json file to update description - VJ
+//Upon response return it calls displayPlantCard function and resets currentPlant to reflect updated description - VJ
+function updateDescription() {
+  currentPlant.description = updateDescriptionText.value;
+  fetch(`http://localhost:3000/plants/${currentPlant.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(currentPlant),
+  })
+    .then(response => response.json())
+    .then(plant => {
+      displayPlantCard(currentPlant);
+    });
+}
 
 // Add plant form with event listener - KL
 const newForm = document.querySelector("#new-plant");
@@ -147,7 +202,7 @@ function updateButtonDisplay(isTrue) {
 }
 
 //* Updates the favorite -Jason
-const updateFavorite = (plantObj) => {
+const updateFavorite = plantObj => {
   const updatedPlant = { ...plantObj };
   updatedPlant.favorite = !updatedPlant.favorite;
   patchJSON(url + `/${plantObj.id}`, { favorite: updatedPlant.favorite }).then(
@@ -168,7 +223,7 @@ const updateFavorite = (plantObj) => {
 };
 
 //* Deletes a plant from db.json -Jason
-const deletePlant = (plantObj) => {
+const deletePlant = plantObj => {
   deleteJSON(url + `/${plantObj.id}`);
   plantImage.src = imageUrl;
   plantName.textContent = "Plant Babies";
@@ -203,7 +258,7 @@ function favoritePlant(plants) {
       faveArr.push(plants[i]);
     }
   }
-  faveArr.forEach((plant) => renderFave(plant));
+  faveArr.forEach(plant => renderFave(plant));
 }
 
 
