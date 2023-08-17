@@ -5,6 +5,8 @@ const url = "http://localhost:3000/plants"; //*Sets url -Jason
 let isFavoriteTrue; //* necessary for favorite button function -Jason
 let currentPlant; //* necessary for patch -Jason
 let showButtons = true;
+let faveArr = [];
+
 
 //*HTML Selectors
 const plantImage = document.querySelector("#plant-image");
@@ -149,6 +151,13 @@ const updateFavorite = (plantObj) => {
     () => {
       currentPlant.favorite = updatedPlant.favorite;
       updateButtonDisplay(updatedPlant.favorite);
+      // Updates favorite bar - KL
+      if (updatedPlant.favorite) {
+        faveArr.push(updatedPlant)
+        renderFave(updatedPlant)
+      } else {
+        removeFromFaves(updatedPlant)
+      }
     }
   );
 };
@@ -163,9 +172,22 @@ const deletePlant = (plantObj) => {
   hideButtons();
   //Deletes same plant from plant list - VJ
   document.getElementById(`${plantObj.id}`).remove();
+  // Updates favorite bar - KL
+  removeFromFaves(plantObj)
 };
 
-const faveArr = [];
+function removeFromFaves(plantObj) {
+  faveArr = faveArr.filter(function( obj ) {
+      return obj.name !== plantObj.name;
+    })
+  const removeImg = document.querySelector(`[id='${plantObj.id}']`)
+  removeImg.remove()
+  // If no favorites, show placeholder image
+  if (document.querySelectorAll('#favorite-container > img').length === 0) {
+      const favePlaceholder = document.querySelector("#fave-placeholder");
+      favePlaceholder.style.display = "block";
+  } 
+}
 
 function favoritePlant(plants) {
   for (let i = 0; i < plants.length; i++) {
@@ -176,7 +198,6 @@ function favoritePlant(plants) {
   faveArr.forEach((plant) => renderFave(plant));
 }
 
-let selectedFave; // Global variable
 
 //Add favorite plants to top bar
 function renderFave(plant) {
@@ -186,12 +207,14 @@ function renderFave(plant) {
   const favoriteContainer = document.getElementById("favorite-container");
   const img = document.createElement("img");
   img.src = plant.image;
+  img.id = plant.id;
   favoriteContainer.append(img);
 
   //Set for when favorite is clicked to do an action
   img.addEventListener("click", (e) => {
-    selectedFave = plant;
-    console.log(selectedFave);
+    isFavoriteTrue = plant.favorite; //* sets favorite button textContent
+    currentPlant = plant;
+    displayPlantCard(plant);
   });
 }
 
